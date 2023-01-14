@@ -17,6 +17,9 @@ namespace AM.ApplicationCore.Domain
         public Plane plane { get; set; }
         public ICollection<Passenger> Passengers { get; set; }
 
-
+        public override string? ToString()
+        {
+            return base.ToString();
+        }
     }
 }

@@ -16,6 +16,33 @@ namespace AM.ApplicationCore.Domain
         public string EmailAddress { get; set; }
         ICollection<Flight> Flights { get; set; }
 
+        //Polymorphe par signature .
+        // Two methods with the same name but different params 
+        public bool CheckProfile(string firstName, string lastName)
+        {
+            return FirstName.Equals(firstName) && LastName.Equals(lastName);
+        }
+        public bool CheckProfile(string firstName, string lastName,string email)
+        {
+           // return FirstName.Equals(firstName) && LastName.Equals(lastName) && EmailAddress.Equals(email);
+            return CheckProfile(firstName,lastName) && EmailAddress.Equals(email);
+        }
 
+        public bool Login(string? firstName, string lastName, string email=null)
+        {
+            if(email != null) {return  CheckProfile(firstName, lastName, email); }
+
+            else { return CheckProfile(firstName, lastName); }
+        }
+
+        public virtual void PassengerType()
+        {
+            Console.WriteLine("I am passenger");
+        }
+
+        public override string? ToString()
+        {
+            return base.ToString();
+        }
     }
 }
