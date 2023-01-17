@@ -60,11 +60,29 @@ namespace AM.ApplicationCore.Services
         public int ProgrammedFlightNumber(DateTime startDate)
         { // 7 days between startDate and real date .( ) 
 
-            var query = from flight in Flights
-                        where (((flight.FlightDate -startDate).TotalDays < 7 ) && (flight.FlightDate - startDate).TotalDays >0) // need to be positive
-                        select flight;
+            //LINQ
 
+            var query = from flight in Flights
+                        where (((flight.FlightDate - startDate).TotalDays < 7) && (flight.FlightDate - startDate).TotalDays > 0) // need to be positive
+                        select flight;
             return query.Count();
+
+
+
+
+        }
+
+        public int ProgrammedFlightNumberWithLambda(DateTime startDate)
+        {
+            //Lambda expression
+            // var lambda2 = Flights.Where(flight =>((flight.FlightDate-startDate).TotalDays<7) && (flight.FlightDate - startDate).TotalDays >0).Select(flight=>flight.FlightDate);
+            
+            var lambda2 = Flights.Where(flight => ((flight.FlightDate - startDate).TotalDays < 7) && (flight.FlightDate - startDate).TotalDays > 0);
+            return lambda2.Count();
+
+            //OR 
+            //return Flights.Where(flight => ((flight.FlightDate - startDate).TotalDays < 7) && (flight.FlightDate - startDate).TotalDays > 0).Count();
+
         }
 
         public void ShowFlightDetails(Plane plane)
@@ -73,11 +91,24 @@ namespace AM.ApplicationCore.Services
             var query = from f in Flights
                         where f.plane == plane
                         select (f.FlightDate, f.Destination);
+            //Lambda expression
+            //var lambda = flights.where(f=>f.Destination.equals(destination)).select(f=>f.flightDate) : Class Example 
+
+            //Lambda Expression 
+            var lambda2 = Flights.Where(flight => flight.plane == plane).Select(flight => (flight.FlightDate, flight.Destination));
 
             foreach (var pl in query)
-            { // Affichage
-                Console.WriteLine(pl.FlightDate+""+pl.Destination);
+            { // Affichage avec LinQ
+                Console.WriteLine(pl.FlightDate+" "+pl.Destination);
             }
+            foreach (var pl in lambda2)
+            { // Affichage avec Lambda Expression
+                Console.WriteLine(pl.FlightDate + " " + pl.Destination);
+            }
+
+
+            IEnumerable<Flight> flights = new IEnumerable<Flight>();
+
         }
     }
 }
