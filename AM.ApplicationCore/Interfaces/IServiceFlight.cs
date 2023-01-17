@@ -16,5 +16,10 @@ namespace AM.ApplicationCore.Interfaces
         public void ShowFlightDetails(Plane plane);
         //QST 11
         public int ProgrammedFlightNumber(DateTime startDate);
+
+        public double DurationAverage(string destination);
+        public IEnumerable<Flight> OrderedDurationFlights();
+        public IEnumerable<Traveller> SeniorTravellers(Flight flight);
+
     }
 }

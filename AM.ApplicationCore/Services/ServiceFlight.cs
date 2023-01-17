@@ -13,6 +13,18 @@ namespace AM.ApplicationCore.Services
         //GLOBAL Variable 
         public IList<Flight> Flights { get; set; } = new List<Flight>();
 
+        public double DurationAverage(string destination)
+        {
+            var Total = 0;
+            return Flights.Where(flight => flight.Destination == destination).Select(flight=>flight.EstimatedDuration).Average();
+            
+            
+            
+            //foreach (var f in lambda)
+            //{
+            //    Total += (double) f;
+            //}
+        }
 
         public IEnumerable<DateTime> GetFlightDates(string destination)
         {
@@ -57,6 +69,12 @@ namespace AM.ApplicationCore.Services
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Flight> OrderedDurationFlights()
+        {
+            //Lambda :
+            return Flights.OrderByDescending(f => f.EstimatedDuration);
+        }
+
         public int ProgrammedFlightNumber(DateTime startDate)
         { // 7 days between startDate and real date .( ) 
 
@@ -85,6 +103,22 @@ namespace AM.ApplicationCore.Services
 
         }
 
+        public IEnumerable<Traveller> SeniorTravellers(Flight flight)
+        {
+            //Lambda Expression
+            //OrderBy Ascending by default .
+            return flight.Passengers.OfType<Traveller>().OrderBy(p => p.BirthDate).Take(3);
+
+            //LINQ
+            return (from f in flight.Passengers.OfType<Traveller>()
+                    orderby f.BirthDate ascending
+                    select f
+                    ).Take(3);
+                   
+
+
+        }
+
         public void ShowFlightDetails(Plane plane)
         {
 
@@ -107,7 +141,7 @@ namespace AM.ApplicationCore.Services
             }
 
 
-            IEnumerable<Flight> flights = new IEnumerable<Flight>();
+           // IEnumerable<Flight> flights = new IEnumerable<Flight>();
 
         }
     }
