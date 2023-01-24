@@ -2,16 +2,16 @@
 {
     public class Plane
     {
-        public Plane()
-        {
-        }
-        public Plane(int capacity, DateTime manufactureDate, int planId, Plane planeType)
-        {
-            Capacity = capacity;
-            ManufactureDate = manufactureDate;
-            PlanId = planId;
-            this.planeType = planeType;
-        }
+        //public Plane()
+        //{
+        //}
+        //public Plane(PlaneType planeType, int capacity, DateTime manufactureDate, int planId)
+        //{
+        //    Capacity = capacity;
+        //    ManufactureDate = manufactureDate;
+        //    PlanId = planId;
+        //    this.planeType = planeType;
+        //}
         #region CLass
         // Props ( not attributes ) 
         //prop + 2TAB
@@ -38,7 +38,7 @@
         public DateTime ManufactureDate { get; set; }
 
         public int PlanId { get; set; }
-        public Plane planeType { get; set; }
+        public PlaneType planeType { get; set; }
 
         // IList<Flight> Flights { get; set; }
         ICollection<Flight> Flights { get; set; }

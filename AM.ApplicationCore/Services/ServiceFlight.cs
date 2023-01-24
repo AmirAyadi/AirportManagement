@@ -1,6 +1,7 @@
 ﻿using AM.ApplicationCore.Domain;
 using AM.ApplicationCore.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,34 @@ namespace AM.ApplicationCore.Services
     {
         //GLOBAL Variable 
         public IList<Flight> Flights { get; set; } = new List<Flight>();
+
+        public IGrouping<string, IEnumerable<Flight>> DestinationGroupedFlightss()
+        {
+            //To Delete ( out of range ) 
+            //Lambda Expression
+            var destinationGrouped = from fligh in Flights
+                                     group fligh by fligh.Destination;
+
+            return (IGrouping<string, IEnumerable<Flight>>)destinationGrouped;
+        }
+
+        public IEnumerable<IGrouping<string, Flight>> DestinationGroupedFlights()
+        {
+            var query =  from f in Flights
+                         group f by f.Destination;
+
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.Key);
+
+                foreach (var item2 in item)
+                {
+                    Console.WriteLine(item2.FlightDate);
+
+                }
+            }
+            return query;
+        }
 
         public double DurationAverage(string destination)
         {
@@ -143,6 +172,28 @@ namespace AM.ApplicationCore.Services
 
            // IEnumerable<Flight> flights = new IEnumerable<Flight>();
 
+        }
+
+        IEnumerable<IGrouping<string, Flight>> IServiceFlight.DestinationGroupedFlights()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<IGrouping<string, Flight>> DestinationGroupedFlightsWithLambda()
+        {
+            var lambda = Flights.GroupBy(f => f.Destination);
+
+            foreach (var item in lambda)
+            {
+                Console.WriteLine(item.Key);
+
+                foreach (var item2 in item)
+                {
+                    Console.WriteLine(item2.FlightDate);
+
+                }
+            }
+            return lambda;
         }
     }
 }

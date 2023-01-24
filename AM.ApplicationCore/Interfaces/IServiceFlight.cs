@@ -1,5 +1,6 @@
 ﻿using AM.ApplicationCore.Domain;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,10 @@ namespace AM.ApplicationCore.Interfaces
         public double DurationAverage(string destination);
         public IEnumerable<Flight> OrderedDurationFlights();
         public IEnumerable<Traveller> SeniorTravellers(Flight flight);
+
+        public IGrouping<string, IEnumerable<Flight>> DestinationGroupedFlightss();
+        public IEnumerable<IGrouping<string,Flight>> DestinationGroupedFlights();
+        public IEnumerable<IGrouping<string,Flight>> DestinationGroupedFlightsWithLambda();
 
     }
 }
